@@ -7,6 +7,6 @@ baseurl: ""
 url: "benkly.kulbertis.org"
 
 # Build settings
-markdown: rdiscount
+markdown: kramdown
 permalink: /:year/:month/:title
 pygments: true
