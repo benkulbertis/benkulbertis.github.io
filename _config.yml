@@ -1,10 +1,12 @@
 # Site settings
-title: Your awesome title
-email: your-email@domain.com
-description: "Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description."
+name: "Ben Kulbertis"
+email: ben@kulbertis.org
+description: "Full Stack Web Developer and Technology Enthusiast"
+location: "Salt Lake City, Utah, USA"
 baseurl: ""
-url: "http://yourdomain.com"
+url: "http://benkly.kulbertis.org"
 
 # Build settings
-markdown: kramdown
-permalink: pretty
+markdown: rdiscount
+permalink: /:year/:month/:title
+highlighter: pygments

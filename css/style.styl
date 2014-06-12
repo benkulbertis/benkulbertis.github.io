@@ -1,0 +1,93 @@
+@media (min-width: 1000px)
+
+  $duration = 500ms
+
+  *
+    margin 0
+    padding 0
+
+  h1, h2, h3
+    font-family Oswald, sans-serif
+    margin-bottom 10px
+
+  h1
+    font-size 3.2vw
+  h2
+    font-size 1.6vw
+  h3
+    font-size 1.4vw
+
+  body
+    background-color #6699CC
+    color whitesmoke
+    font-family sans-serif
+    overflow hidden
+
+  header
+    font-family Oswald, sans-serif
+    position fixed
+    $margin = 20px
+    left $margin
+    bottom $margin
+    text-shadow 0 0 10px #5a5a5a
+    *
+      margin 0
+      opacity 0
+    h1
+      letter-spacing 3px
+      animation fadein $duration ease-in 1ms forwards
+      -webkit-animation fadein $duration ease-in 1ms forwards
+      -moz-animation fadein $duration ease-in 1ms forwards
+
+      a
+        color whitesmoke
+        text-decoration none
+        opacity 1
+
+    for $child in 1 2
+      h2:nth-of-type({$child})
+        animation fadein $duration ease-in ($duration * $child) forwards
+        -webkit-animation fadein $duration ease-in ($duration * $child) forwards
+        -moz-animation fadein $duration ease-in ($duration * $child) forwards
+
+  section
+    position absolute
+    left 40%
+    width 55%
+    height 95%
+    padding 0 20px
+    margin 20px 0
+    font-family Lato, sans-serif
+    overflow-y auto
+    opacity 0
+    animation fadein $duration ease-in 1600ms forwards
+    -webkit-animation fadein $duration ease-in 1600ms forwards
+    -moz-animation fadein $duration ease-in 1600ms forwards
+
+  nav
+    position absolute
+    $margin = 20px
+    top 20px
+    left 20px
+    opacity 0
+    animation fadein $duration ease-in 2400ms forwards
+    -webkit-animation fadein $duration ease-in 2400ms forwards
+    -moz-animation fadein $duration ease-in 2400ms forwards
+    li
+      list-style none
+
+  p
+    margin-bottom 20px
+
+  @keyframes fadein {
+    from { opacity: 0 }
+    to   { opacity: 1 }
+  }
+
+  ::-webkit-scrollbar
+    width 12px
+
+  ::-webkit-scrollbar-thumb
+    border-radius 5px
+    -webkit-box-shadow inset 0 0 6px rgba(0, 0, 0, .3)
+    background-color rgba(100, 100, 100, 0.7)
