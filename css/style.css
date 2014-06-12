@@ -1,3 +1,11 @@
+@font-face {
+  font-family: 'Champagne';
+  src: url("/fonts/cac_champagne-webfont.eot");
+  src: url("/fonts/cac_champagne-webfont.eot?#iefix") format('embedded-opentype'), url("/fonts/cac_champagne-webfont.woff") format('woff'), url("/fonts/cac_champagne-webfont.ttf") format('truetype'), url("/fonts/cac_champagne-webfont.svg#CACChampagneRegular") format('svg');
+  font-weight: normal;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+}
 @media (min-width: 1000px) {
   * {
     margin: 0;
@@ -8,6 +16,8 @@
   h3 {
     font-family: Oswald, sans-serif;
     margin-bottom: 10px;
+    color: #ddd;
+    text-shadow: 1px 1px 0 #444;
   }
   h1 {
     font-size: 3.2vw;
@@ -16,12 +26,12 @@
     font-size: 1.6vw;
   }
   h3 {
-    font-size: 1.4vw;
+    font-size: 1.5vw;
   }
   body {
-    background-color: #69c;
-    color: #f5f5f5;
-    font-family: sans-serif;
+    background-color: #222;
+    color: #fff;
+    font-family: Lato, sans-serif;
     overflow: hidden;
   }
   header {
@@ -29,22 +39,23 @@
     position: fixed;
     left: 20px;
     bottom: 20px;
-    text-shadow: 0 0 10px #5a5a5a;
   }
   header * {
     margin: 0;
     opacity: 0;
   }
   header h1 {
-    letter-spacing: 3px;
     animation: fadein 500ms ease-in 1ms forwards;
     -webkit-animation: fadein 500ms ease-in 1ms forwards;
     -moz-animation: fadein 500ms ease-in 1ms forwards;
   }
   header h1 a {
-    color: #f5f5f5;
-    text-decoration: none;
     opacity: 1;
+    color: #ddd;
+    text-decoration: none;
+    font: 5vw Champagne, serif;
+    line-height: 4.5vw;
+    letter-spacing: 1px;
   }
   header h2:nth-of-type(1) {
     animation: fadein 500ms ease-in 500ms forwards;
@@ -63,7 +74,6 @@
     height: 95%;
     padding: 0 20px;
     margin: 20px 0;
-    font-family: Lato, sans-serif;
     overflow-y: auto;
     opacity: 0;
     animation: fadein 500ms ease-in 1600ms forwards;
@@ -82,7 +92,16 @@
   nav li {
     list-style: none;
   }
+  a {
+    color: #ddd;
+  }
+  a:hover {
+    color: #fff;
+  }
   p {
+    margin-bottom: 20px;
+  }
+  .highlight {
     margin-bottom: 20px;
   }
   ::-webkit-scrollbar {
