@@ -4,9 +4,9 @@ email: ben@kulbertis.org
 description: "Full Stack Web Developer and Technology Enthusiast"
 location: "Salt Lake City, Utah, USA"
 baseurl: ""
-url: "http://benkly.kulbertis.org"
+url: "benkly.kulbertis.org"
 
 # Build settings
 markdown: rdiscount
 permalink: /:year/:month/:title
-highlighter: pygments
+pygments: true
