@@ -40,26 +40,16 @@
     *
       margin 0
       opacity 0
-    h1
-      animation fadein $duration ease-in 1ms forwards
-      -webkit-animation fadein $duration ease-in 1ms forwards
-      -moz-animation fadein $duration ease-in 1ms forwards
+    h1 > a
+      opacity 1
+      color #ddd
+      text-decoration none
+      font 5vw Champagne, serif
+      line-height 4.5vw
+      letter-spacing 1px
 
-      a
-        opacity 1
-        color #ddd
-        text-decoration none
-        font 5vw Champagne, serif
-        line-height 4.5vw
-        letter-spacing 1px
-
-    for $child in 1 2
-      h2:nth-of-type({$child})
-        animation fadein $duration ease-in ($duration * $child) forwards
-        -webkit-animation fadein $duration ease-in ($duration * $child) forwards
-        -moz-animation fadein $duration ease-in ($duration * $child) forwards
-
-  section
+  section.post
+    opacity 0
     position absolute
     left 40%
     width 55%
@@ -68,21 +58,12 @@
     margin 20px 0
     overflow-y auto
 
-  section.fadein
-    opacity 0
-    animation fadein $duration ease-in 1600ms forwards
-    -webkit-animation fadein $duration ease-in 1600ms forwards
-    -moz-animation fadein $duration ease-in 1600ms forwards
-
   nav
     position absolute
     $margin = 20px
     top 20px
     left 20px
     opacity 0
-    animation fadein $duration ease-in 2400ms forwards
-    -webkit-animation fadein $duration ease-in 2400ms forwards
-    -moz-animation fadein $duration ease-in 2400ms forwards
     li
       list-style none
 
