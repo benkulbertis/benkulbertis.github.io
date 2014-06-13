@@ -14,6 +14,12 @@
   .bold {
     font-weight: bold;
   }
+  .highlight {
+    border-left: 1px dotted #ddd;
+    padding: 5px 0 5px 15px;
+    margin-bottom: 20px;
+    vertical-align: super;
+  }
   h1,
   h2,
   h3 {
@@ -81,9 +87,6 @@
     color: #fff;
   }
   p {
-    margin-bottom: 20px;
-  }
-  .highlight {
     margin-bottom: 20px;
   }
   ::-webkit-scrollbar {
