@@ -76,14 +76,11 @@
     margin: 20px 0;
     overflow-y: auto;
   }
-  .fadein {
+  section.fadein {
     opacity: 0;
     animation: fadein 500ms ease-in 1600ms forwards;
     -webkit-animation: fadein 500ms ease-in 1600ms forwards;
     -moz-animation: fadein 500ms ease-in 1600ms forwards;
-  }
-  #loader {
-    display: none;
   }
   nav {
     position: absolute;
