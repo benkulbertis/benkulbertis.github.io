@@ -1,18 +1,27 @@
 $(document).ready(function(){
 
     $('.post').css({overflowY: 'hidden'});
+    $('#headers').css({borderBottom: 'none'});
+
+    function fadeEach(e){
+        var $this = $(e);
+        $this.delay(50*$this.index()).animate({opacity:1}, 400);
+    }
 
     /* Yeah, that's right, brush that weak ass fade. - https://i.imgur.com/OTRjYgU.gif */
-    $('header > h1').delay(200).animate({opacity:1}, 400, function(){
-        $('header > h2:nth-of-type(1)').delay(200).animate({opacity:1}, 400, function(){
-            $('header > h2:nth-of-type(2)').delay(200).animate({opacity:1}, 400, function(){
+    $('#headers > h1').delay(200).animate({opacity:1}, 400, function(){
+        $('#headers > h2:nth-of-type(1)').delay(200).animate({opacity:1}, 400, function(){
+            $('#headers > h2:nth-of-type(2)').delay(200).animate({opacity:1}, 400, function(){
                 var $post = $('.post');
-                $post.contents().each(function(){
-                    var $this = $(this);
-                    $this.delay(50*$this.index()).animate({opacity:1}, 400);
-                });
                 $post.css({overflowY: 'auto'});
-                $('nav').delay(50*$post.children().length).animate({opacity:1}, 400);
+                $post.contents().each(function(){
+                    fadeEach(this);
+                }).promise().done(function(){
+                    $('#headers').css({borderBottom: '1px dotted #dddddd'});
+                    $('nav').contents().each(function(){
+                        fadeEach(this);
+                    });
+                });
             });
         });
     });

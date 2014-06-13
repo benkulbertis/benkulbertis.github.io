@@ -6,7 +6,7 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
 }
-@media (min-width: 1000px) {
+@media (min-width: 1100px) {
   * {
     margin: 0;
     padding: 0;
@@ -19,10 +19,12 @@
     padding: 3px 0 5px 15px;
     margin-bottom: 20px;
     background-color: #343434;
+    overflow: auto;
   }
   h1,
   h2,
-  h3 {
+  h3,
+  h4 {
     font-family: Oswald, sans-serif;
     margin-bottom: 10px;
     color: #ddd;
@@ -35,8 +37,12 @@
     font-size: 1.6vw;
   }
   h3 {
-    font-size: 1.5vw;
+    font-size: 1.6vw;
   }
+  h4 {
+    font-size: 1.3vw;
+  }
+  html,
   body {
     background-color: #222;
     color: #fff;
@@ -44,16 +50,21 @@
     overflow: hidden;
   }
   header {
-    font-family: Oswald, sans-serif;
-    position: fixed;
+    position: absolute;
     left: 20px;
-    bottom: 20px;
+    top: 15px;
   }
-  header * {
+  header #headers {
+    font-family: Oswald, sans-serif;
+    border-bottom: 1px dotted #ddd;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+  }
+  header #headers * {
     margin: 0;
     opacity: 0;
   }
-  header h1 > a {
+  header #headers h1 > a {
     opacity: 1;
     color: #ddd;
     text-decoration: none;
@@ -69,18 +80,19 @@
     padding: 0 20px;
     margin: 20px 0;
     overflow-y: auto;
+    overflow-x: hidden;
   }
   section.post > * {
     opacity: 0;
   }
   nav {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    opacity: 0;
+    font-size: 1.2vw;
   }
   nav li {
     list-style: none;
+  }
+  nav > * {
+    opacity: 0;
   }
   a {
     color: #ddd;
@@ -93,6 +105,7 @@
   }
   ::-webkit-scrollbar {
     width: 12px;
+    height: 12px;
   }
   ::-webkit-scrollbar-thumb {
     border-radius: 5px;
@@ -131,4 +144,17 @@
       opacity: 1;
     }
 }
+}
+@media (min-width: 1300px) {
+  nav {
+    font-size: 1.1vw;
+  }
+}
+@media (min-width: 1600px) {
+  h3 {
+    font-size: 1.5vw;
+  }
+  nav {
+    font-size: 0.95vw;
+  }
 }

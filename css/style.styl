@@ -4,7 +4,7 @@
   font-style:normal;
   -webkit-font-smoothing: antialiased;
 
-@media (min-width: 1000px)
+@media (min-width: 1100px)
 
   $duration = 500ms
 
@@ -20,8 +20,9 @@
     padding 3px 0 5px 15px
     margin-bottom 20px
     background-color #343434;
+    overflow auto
 
-  h1, h2, h3
+  h1, h2, h3, h4
     font-family Oswald, sans-serif
     margin-bottom 10px
     color #ddd
@@ -32,30 +33,35 @@
   h2
     font-size 1.6vw
   h3
-    font-size 1.5vw
+    font-size 1.6vw
+  h4
+    font-size 1.3vw
 
-  body
+  html, body
     background-color #222
     color white
     font-family Lato, sans-serif
     overflow hidden
 
   header
-    font-family Oswald, sans-serif
-    position fixed
-    $margin = 20px
-    left $margin
-    bottom $margin
-    *
-      margin 0
-      opacity 0
-    h1 > a
-      opacity 1
-      color #ddd
-      text-decoration none
-      font 5vw Champagne, serif
-      line-height 4.5vw
-      letter-spacing 1px
+    position absolute
+    left 20px
+    top 15px
+    #headers
+      font-family Oswald, sans-serif
+      border-bottom 1px dotted #dddddd
+      padding-bottom 20px
+      margin-bottom 20px
+      *
+        margin 0
+        opacity 0
+      h1 > a
+        opacity 1
+        color #ddd
+        text-decoration none
+        font 5vw Champagne, serif
+        line-height 4.5vw
+        letter-spacing 1px
 
   section.post
     position absolute
@@ -65,18 +71,17 @@
     padding 0 20px
     margin 20px 0
     overflow-y auto
+    overflow-x hidden
 
   section.post > *
     opacity 0
 
   nav
-    position absolute
-    $margin = 20px
-    top $margin
-    left $margin
-    opacity 0
+    font-size 1.2vw
     li
       list-style none
+  nav > *
+    opacity 0
 
   a
     color #ddd
@@ -93,8 +98,21 @@
 
   ::-webkit-scrollbar
     width 12px
+    height 12px
 
   ::-webkit-scrollbar-thumb
     border-radius 5px
     -webkit-box-shadow inset 0 0 6px rgba(0, 0, 0, .3)
     background-color rgba(100, 100, 100, 0.7)
+
+@media (min-width: 1300px)
+
+  nav
+    font-size 1.1vw
+
+@media (min-width: 1600px)
+
+  h3
+    font-size 1.5vw
+  nav
+    font-size 0.95vw

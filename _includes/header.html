@@ -1,5 +1,8 @@
 <header>
-    <h1><a href="/">{{ site.name }}</a></h1>
-    <h2>{{ site.description }}</h2>
-    <h2>{{ site.location }}</h2>
+    <div id="headers">
+        <h1><a href="/">{{ site.name }}</a></h1>
+        <h2>{{ site.description }}</h2>
+        <h2>{{ site.location }}</h2>
+    </div>
+    {% include nav.html %}
 </header>
