@@ -21,8 +21,8 @@ $(document).ready(function(){
         var State = History.getState();
         $.get(State.url, function(data){
             document.title = $(data).filter("title").text();
-            $('.post').fadeOut(400, function(){
-                $('.post').html($(data).filter('.post').contents()).fadeIn(400);
+            $('.post').fadeOut(300, function(){
+                $('.post').html($(data).filter('.post').contents()).fadeIn(300);
             });
             //_gaq.push(['_trackPageview', State.url]);
         });
