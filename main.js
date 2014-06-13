@@ -1,12 +1,16 @@
 $(document).ready(function(){
 
+    $('.post').css({overflowY: 'hidden'});
+
     /* Yeah, that's right, brush that weak ass fade. - https://i.imgur.com/OTRjYgU.gif */
-    $('header > h1').delay(100).animate({opacity:1}, 400, function(){
-        $('header > h2:nth-of-type(1)').delay(100).animate({opacity:1}, 400, function(){
-            $('header > h2:nth-of-type(2)').delay(100).animate({opacity:1}, 400, function(){
-                $('.post').delay(300).animate({opacity:1}, 400, function(){
-                    $('nav').delay(300).animate({opacity:1}, 400);
+    $('header > h1').delay(200).animate({opacity:1}, 400, function(){
+        $('header > h2:nth-of-type(1)').delay(200).animate({opacity:1}, 400, function(){
+            $('header > h2:nth-of-type(2)').delay(200).animate({opacity:1}, 400, function(){
+                $('.post').contents().each(function(){
+                    $(this).delay(50*$(this).index()).animate({opacity:1}, 400);
                 });
+                $('.post').css({overflowY: 'auto'});
+                $('nav').delay(50*$('.post').children().length).animate({opacity:1}, 400);
             });
         });
     });
@@ -22,7 +26,9 @@ $(document).ready(function(){
         $.get(State.url, function(data){
             document.title = $(data).filter("title").text();
             $('.post').fadeOut(300, function(){
-                $('.post').html($(data).filter('.post').contents()).fadeIn(300);
+                $('.post').html($(data).filter('.post').contents());
+                $('.post > *').css({opacity: 1});
+                $('.post').fadeIn(300);
             });
             //_gaq.push(['_trackPageview', State.url]);
         });
