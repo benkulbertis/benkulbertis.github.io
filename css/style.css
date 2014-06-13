@@ -44,12 +44,7 @@
     margin: 0;
     opacity: 0;
   }
-  header h1 {
-    animation: fadein 500ms ease-in 1ms forwards;
-    -webkit-animation: fadein 500ms ease-in 1ms forwards;
-    -moz-animation: fadein 500ms ease-in 1ms forwards;
-  }
-  header h1 a {
+  header h1 > a {
     opacity: 1;
     color: #ddd;
     text-decoration: none;
@@ -57,17 +52,8 @@
     line-height: 4.5vw;
     letter-spacing: 1px;
   }
-  header h2:nth-of-type(1) {
-    animation: fadein 500ms ease-in 500ms forwards;
-    -webkit-animation: fadein 500ms ease-in 500ms forwards;
-    -moz-animation: fadein 500ms ease-in 500ms forwards;
-  }
-  header h2:nth-of-type(2) {
-    animation: fadein 500ms ease-in 1000ms forwards;
-    -webkit-animation: fadein 500ms ease-in 1000ms forwards;
-    -moz-animation: fadein 500ms ease-in 1000ms forwards;
-  }
-  section {
+  section.post {
+    opacity: 0;
     position: absolute;
     left: 40%;
     width: 55%;
@@ -76,23 +62,11 @@
     margin: 20px 0;
     overflow-y: auto;
   }
-  .fadein {
-    opacity: 0;
-    animation: fadein 500ms ease-in 1600ms forwards;
-    -webkit-animation: fadein 500ms ease-in 1600ms forwards;
-    -moz-animation: fadein 500ms ease-in 1600ms forwards;
-  }
-  #loader {
-    display: none;
-  }
   nav {
     position: absolute;
     top: 20px;
     left: 20px;
     opacity: 0;
-    animation: fadein 500ms ease-in 2400ms forwards;
-    -webkit-animation: fadein 500ms ease-in 2400ms forwards;
-    -moz-animation: fadein 500ms ease-in 2400ms forwards;
   }
   nav li {
     list-style: none;
