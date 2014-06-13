@@ -19,7 +19,7 @@ date:   2011-10-29 19:19:00
 <p>Now, lets write the pre-commit script. We are going to tell the system to dump our MySQL database to our git repository and add it to be committed.</p>
 
 {% highlight bash %}
-#!/bin/sh
+#!/bin/bash
 mysqldump -u [mysql user] -p[mysql password] --skip-extended-insert [database] > /path/to/your/repo/[database].sql
 cd /path/to/your/repo
 git add [database].sql
@@ -40,7 +40,7 @@ chmod +x /path/to/your/repo/.git/hooks/pre-commit
 <p>And write:</p>
 
 {% highlight bash %}
-#!/bin/sh
+#!/bin/bash
 mysql -u [mysql user] -p[mysql password] [database] < /path/to/your/repo/[database].sql
 {% endhighlight %}
 
