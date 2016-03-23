@@ -3,9 +3,12 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Changes in mod_authz_unixgroup from Apache 2.2 to 2.4 - Ben Kulbertis</title>
-        <meta name="viewport" content="width=device-width">
+        <meta name="generator" content="Hugo 0.15" />
+	<meta name="viewport" content="width=device-width">
         <meta name="description" content="Hey! I&#39;m Ben. I&#39;m a young web developer living in Salt Lake City, Utah. I&#39;m currently interesting in writing web applications using Ember.js and Ruby on Rails.">
+
+	<title>Changes in mod_authz_unixgroup from Apache 2.2 to 2.4 - Ben Kulbertis</title>
+
         <link rel="canonical" href="http://ben.kulbertis.org/2016/03/changes-in-mod-authz-unixgroup-from-apache-2-2-to-2-4">
         <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"/>
 
@@ -13,7 +16,6 @@
         <link href="//fonts.googleapis.com/css?family=Oswald" rel="stylesheet" type="text/css">
         <link href="//fonts.googleapis.com/css?family=Lato:400,900" rel="stylesheet" type="text/css">
 
-        
         
         <link rel="stylesheet" href="/css/style.css">
 
@@ -55,6 +57,7 @@
             </nav>
         </header>
         <section class="post">
+
 <h3 id="post-title">Changes in mod_authz_unixgroup from Apache 2.2 to 2.4</h3>
 <p class="meta">Mar 23, 2016</p>
 <p>mod_authz_unixgroup is an apache module that can be used to allow members of Unix groups on the server to access restricted content with their Unix user credentials. These groups are defined in a require directive and therefore it can be used with essentially any AuthType. We utilize this extensively at my place of work, as all our users and groups are stored in our Active Directory, which are then mapped to Unix users and groups on all our machines via pam_ldap.</p>
