@@ -36,6 +36,11 @@
                 <ul class="posts">
                     
                         <li>
+    <a class="post-link" href="http://ben.kulbertis.org/2016/03/changes-in-mod-authz-unixgroup-from-apache-2-2-to-2-4">Changes in mod_authz_unixgroup from Apache 2.2 to 2.4</a>
+    <small>&ndash; Mar 23, 2016</small>
+</li>
+                    
+                        <li>
     <a class="post-link" href="http://ben.kulbertis.org/2011/10/synchronizing-a-mysql-database-with-git-and-git-hooks">Synchronizing A MySQL Database with Git and Git Hooks</a>
     <small>&ndash; Oct 29, 2011</small>
 </li>
@@ -60,13 +65,13 @@
 
 <p>Let&rsquo;s start with pre-commit. The pre-commit hook will run a script directly before a commit is executed. To edit your pre-commit hook:</p>
 
-<div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span style="color: #f92672">[</span>your editor<span style="color: #f92672">]</span> /path/to/your/repo/.git/hooks/pre-commit
+<div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span></span><span style="color: #f92672">[</span>your editor<span style="color: #f92672">]</span> /path/to/your/repo/.git/hooks/pre-commit
 </pre></div>
 
 
 <p>Now, lets write the pre-commit script. We are going to tell the system to dump our MySQL database to our git repository and add it to be committed.</p>
 
-<div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span style="color: #75715e">#!/bin/bash</span>
+<div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span></span><span style="color: #75715e">#!/bin/bash</span>
 mysqldump -u <span style="color: #f92672">[</span>mysql user<span style="color: #f92672">]</span> -p<span style="color: #f92672">[</span>mysql password<span style="color: #f92672">]</span> --skip-extended-insert <span style="color: #f92672">[</span>database<span style="color: #f92672">]</span> &gt; /path/to/your/repo/<span style="color: #f92672">[</span>database<span style="color: #f92672">]</span>.sql
 <span style="color: #f8f8f2">cd</span> /path/to/your/repo
 git add <span style="color: #f92672">[</span>database<span style="color: #f92672">]</span>.sql
@@ -75,19 +80,19 @@ git add <span style="color: #f92672">[</span>database<span style="color: #f92672
 
 <p>And mark the script executable.</p>
 
-<p><div class="highlight" style="background: #272822"><pre style="line-height: 125%">chmod +x /path/to/your/repo/.git/hooks/pre-commit
+<p><div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span></span>chmod +x /path/to/your/repo/.git/hooks/pre-commit
 </pre></div>
 </p>
 
 <p>Now, lets write the post-merge script. We are going to tell the system to restore the MySQL dump to the local database for the latest changes. Edit the post-merge hook with:</p>
 
-<p><div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span style="color: #f92672">[</span>your editor<span style="color: #f92672">]</span> /path/to/your/repo/.git/hooks/post-merge
+<p><div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span></span><span style="color: #f92672">[</span>your editor<span style="color: #f92672">]</span> /path/to/your/repo/.git/hooks/post-merge
 </pre></div>
 </p>
 
 <p>And write:</p>
 
-<p><div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span style="color: #75715e">#!/bin/bash</span>
+<p><div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span></span><span style="color: #75715e">#!/bin/bash</span>
 mysql -u <span style="color: #f92672">[</span>mysql user<span style="color: #f92672">]</span> -p<span style="color: #f92672">[</span>mysql password<span style="color: #f92672">]</span> <span style="color: #f92672">[</span>database<span style="color: #f92672">]</span> &lt; /path/to/your/repo/<span style="color: #f92672">[</span>database<span style="color: #f92672">]</span>.sql
 </pre></div>
 </p>
@@ -96,7 +101,7 @@ mysql -u <span style="color: #f92672">[</span>mysql user<span style="color: #f92
 
 <p>And let&rsquo;s mark this one executable too.</p>
 
-<p><div class="highlight" style="background: #272822"><pre style="line-height: 125%">chmod +x /path/to/your/repo/.git/hooks/post-merge
+<p><div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span></span>chmod +x /path/to/your/repo/.git/hooks/post-merge
 </pre></div>
 </p>
 

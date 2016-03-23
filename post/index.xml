@@ -6,8 +6,46 @@
     <description>Recent content in Posts on Ben Kulbertis</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 29 Oct 2011 19:19:00 -0500</lastBuildDate>
+    <lastBuildDate>Wed, 23 Mar 2016 16:36:34 -0600</lastBuildDate>
     <atom:link href="http://ben.kulbertis.org/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Changes in mod_authz_unixgroup from Apache 2.2 to 2.4</title>
+      <link>http://ben.kulbertis.org/2016/03/changes-in-mod-authz-unixgroup-from-apache-2-2-to-2-4</link>
+      <pubDate>Wed, 23 Mar 2016 16:36:34 -0600</pubDate>
+      
+      <guid>http://ben.kulbertis.org/2016/03/changes-in-mod-authz-unixgroup-from-apache-2-2-to-2-4</guid>
+      <description>&lt;p&gt;mod_authz_unixgroup is an apache module that can be used to allow members of Unix groups on the server to access restricted content with their Unix user credentials. These groups are defined in a require directive and therefore it can be used with essentially any AuthType. We utilize this extensively at my place of work, as all our users and groups are stored in our Active Directory, which are then mapped to Unix users and groups on all our machines via pam_ldap.&lt;/p&gt;
+
+&lt;p&gt;When switching from Apache 2.2 to 2.4, I experienced some issues with compatibility with our current implementation of the module. Under 2.2, the module had to be initialized with &amp;lsquo;AuthzUnixgroup on&amp;rsquo; and the require directive was &amp;lsquo;require group mygroup&amp;rsquo;. The whole configuration looked something like this:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;AuthType&lt;/span&gt; Basic
+&lt;span style=&#34;color: #f8f8f2&#34;&gt;AuthzUnixgroup&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;on&lt;/span&gt;
+&lt;span style=&#34;color: #f8f8f2&#34;&gt;Require&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;group&lt;/span&gt; mygroup
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;However, this resulted in a 500 error with the following in the logs on Apache 2.4:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Invalid command &#39;AuthzUnixgroup&#39;, perhaps misspelled or defined by a module not included in the server configuration
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Surprisingly, I couldn&amp;rsquo;t find any sign of this error in Google searches. The module was definitely loaded but this directive was unrecognized with no further explanation. I was about to compile the module from source in an attempt to troubleshoot when I found the answer buried in the &lt;a href=&#34;https://raw.githubusercontent.com/phokz/mod-auth-external/master/mod_authz_unixgroup/INSTALL&#34;&gt;INSTALL file&lt;/a&gt;{:target=&amp;rdquo;_blank&amp;rdquo;}.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Previous versions of mod_authz_unixgroup needed a &amp;lsquo;AuthzUnixgroup on&amp;rsquo; to tell Apache that the &amp;ldquo;Require file-group&amp;rdquo; (or &amp;ldquo;Require group&amp;rdquo;) directive was supposed to be handled by mod_authz_unixgroup. Now we have a distinct directive, &amp;ldquo;Require unix-file-group&amp;rdquo; (and &amp;ldquo;Require unix-group&amp;rdquo;) instead, so the &amp;lsquo;AuthzUnixgroup&amp;rsquo; is no longer needed and no longer exists.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;That certainly explained my error. Now, our configurations look more like this on Apache 2.4:&lt;/p&gt;
+
+&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;AuthType&lt;/span&gt; Basic
+&lt;span style=&#34;color: #f8f8f2&#34;&gt;Require&lt;/span&gt; unix-group mygroup
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/p&gt;
+
+&lt;p&gt;Behavior is now identical to how it was on 2.2.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Synchronizing A MySQL Database with Git and Git Hooks</title>
@@ -23,13 +61,13 @@
 
 &lt;p&gt;Let&amp;rsquo;s start with pre-commit. The pre-commit hook will run a script directly before a commit is executed. To edit your pre-commit hook:&lt;/p&gt;
 
-&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #f92672&#34;&gt;[&lt;/span&gt;your editor&lt;span style=&#34;color: #f92672&#34;&gt;]&lt;/span&gt; /path/to/your/repo/.git/hooks/pre-commit
+&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;[&lt;/span&gt;your editor&lt;span style=&#34;color: #f92672&#34;&gt;]&lt;/span&gt; /path/to/your/repo/.git/hooks/pre-commit
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;Now, lets write the pre-commit script. We are going to tell the system to dump our MySQL database to our git repository and add it to be committed.&lt;/p&gt;
 
-&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #75715e&#34;&gt;#!/bin/bash&lt;/span&gt;
+&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #75715e&#34;&gt;#!/bin/bash&lt;/span&gt;
 mysqldump -u &lt;span style=&#34;color: #f92672&#34;&gt;[&lt;/span&gt;mysql user&lt;span style=&#34;color: #f92672&#34;&gt;]&lt;/span&gt; -p&lt;span style=&#34;color: #f92672&#34;&gt;[&lt;/span&gt;mysql password&lt;span style=&#34;color: #f92672&#34;&gt;]&lt;/span&gt; --skip-extended-insert &lt;span style=&#34;color: #f92672&#34;&gt;[&lt;/span&gt;database&lt;span style=&#34;color: #f92672&#34;&gt;]&lt;/span&gt; &amp;gt; /path/to/your/repo/&lt;span style=&#34;color: #f92672&#34;&gt;[&lt;/span&gt;database&lt;span style=&#34;color: #f92672&#34;&gt;]&lt;/span&gt;.sql
 &lt;span style=&#34;color: #f8f8f2&#34;&gt;cd&lt;/span&gt; /path/to/your/repo
 git add &lt;span style=&#34;color: #f92672&#34;&gt;[&lt;/span&gt;database&lt;span style=&#34;color: #f92672&#34;&gt;]&lt;/span&gt;.sql
@@ -38,19 +76,19 @@ git add &lt;span style=&#34;color: #f92672&#34;&gt;[&lt;/span&gt;database&lt;spa
 
 &lt;p&gt;And mark the script executable.&lt;/p&gt;
 
-&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;chmod +x /path/to/your/repo/.git/hooks/pre-commit
+&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;chmod +x /path/to/your/repo/.git/hooks/pre-commit
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/p&gt;
 
 &lt;p&gt;Now, lets write the post-merge script. We are going to tell the system to restore the MySQL dump to the local database for the latest changes. Edit the post-merge hook with:&lt;/p&gt;
 
-&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #f92672&#34;&gt;[&lt;/span&gt;your editor&lt;span style=&#34;color: #f92672&#34;&gt;]&lt;/span&gt; /path/to/your/repo/.git/hooks/post-merge
+&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;[&lt;/span&gt;your editor&lt;span style=&#34;color: #f92672&#34;&gt;]&lt;/span&gt; /path/to/your/repo/.git/hooks/post-merge
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/p&gt;
 
 &lt;p&gt;And write:&lt;/p&gt;
 
-&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #75715e&#34;&gt;#!/bin/bash&lt;/span&gt;
+&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #75715e&#34;&gt;#!/bin/bash&lt;/span&gt;
 mysql -u &lt;span style=&#34;color: #f92672&#34;&gt;[&lt;/span&gt;mysql user&lt;span style=&#34;color: #f92672&#34;&gt;]&lt;/span&gt; -p&lt;span style=&#34;color: #f92672&#34;&gt;[&lt;/span&gt;mysql password&lt;span style=&#34;color: #f92672&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;[&lt;/span&gt;database&lt;span style=&#34;color: #f92672&#34;&gt;]&lt;/span&gt; &amp;lt; /path/to/your/repo/&lt;span style=&#34;color: #f92672&#34;&gt;[&lt;/span&gt;database&lt;span style=&#34;color: #f92672&#34;&gt;]&lt;/span&gt;.sql
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/p&gt;
@@ -59,7 +97,7 @@ mysql -u &lt;span style=&#34;color: #f92672&#34;&gt;[&lt;/span&gt;mysql user&lt;
 
 &lt;p&gt;And let&amp;rsquo;s mark this one executable too.&lt;/p&gt;
 
-&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;chmod +x /path/to/your/repo/.git/hooks/post-merge
+&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;chmod +x /path/to/your/repo/.git/hooks/post-merge
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/p&gt;
 

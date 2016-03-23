@@ -3,10 +3,10 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Ben Kulbertis - Full Stack Web Developer and Technology Enthusiast</title>
+        <title>Changes in mod_authz_unixgroup from Apache 2.2 to 2.4 - Ben Kulbertis</title>
         <meta name="viewport" content="width=device-width">
         <meta name="description" content="Hey! I&#39;m Ben. I&#39;m a young web developer living in Salt Lake City, Utah. I&#39;m currently interesting in writing web applications using Ember.js and Ruby on Rails.">
-        <link rel="canonical" href="http://ben.kulbertis.org/">
+        <link rel="canonical" href="http://ben.kulbertis.org/2016/03/changes-in-mod-authz-unixgroup-from-apache-2-2-to-2-4">
         <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"/>
 
         
@@ -55,9 +55,38 @@
             </nav>
         </header>
         <section class="post">
-<div id="index">
-    <h4 style="display: inline">Hey! I'm Ben.</h4> I'm a young web developer living in <strong>Salt Lake City, Utah.</strong> I'm currently interesting in writing web applications using <a href="http://emberjs.com/"><img src="logos/ember.png" alt="Ember.js" style="vertical-align: sub"></a> and <a href="http://rubyonrails.org/"><img src="logos/RoR.png" alt="Ruby on Rails"></a>. <a href="https://github.com/emberjs/data">Ember Data</a> is frickin' sweet. I'm still a big fan of <a href="https://jquery.com/"><img src="logos/jquery.png" alt="jQuery" class="middle"></a> though <img src="logos/HTML5CSS3.png" alt="HTML5 & CSS3"> are great and let me write less of it. <a href="http://sass-lang.com/">SASS</a>, <a href="http://lesscss.org/">LESS</a>, and (currently my favorite preprocessor) <a href="https://learnboost.github.io/stylus/"><img src="logos/stylus.png" alt="Stylus"></a> make writing quality CSS fun and easy. I also love <strong>Linux</strong> and <strong>System Administration</strong>. I run <a href="http://www.ubuntu.com/"><img src="logos/ubuntu.png" alt="Ubuntu"></a> on my personal machines and just about any server as well. It's mostly because <a href="https://help.launchpad.net/Packaging/PPA">PPAs</a> are incredibly convenient and Ubuntu is pretty darn stable. <a href="https://www.archlinux.org/">Arch</a> and <a href="https://wiki.archlinux.org/index.php/Arch_User_Repository">AUR</a> are nice as well, but more bleeding edge. Some of the server technologies I'm familiar with are the <a href="https://httpd.apache.org/"><img src="logos/apache.png" alt="Apache" style="vertical-align: top"></a> and <a href="http://wiki.nginx.org/Main"><img src="logos/nginx.gif" alt="Nginx"></a> web servers, the <a href="https://www.mysql.com/"><img src="logos/mysql.png" alt="MySQL" style="vertical-align: sub"></a> and <a href="http://www.postgresql.org/"><img src="logos/postgresql.png" alt="PostgreSQL"></a> databases, <a href="https://www.varnish-cache.org/"><img src="logos/varnish.png" alt="Varnish Cache"></a> and <a href="http://redis.io/"><img src="logos/redis.png" alt="Redis"></a>, just to name a few I like. I love scripting in Bash for simple tasks and automation but I use <a href="http://www.zsh.org/"><img src="logos/zsh.png" alt="Zsh"></a> in the console wherever I can because <a href="http://fendrich.se/blog/2012/09/28/no/">it's awesome</a>. Zsh has integration capabilities for <a href="http://git-scm.com/"><img src="logos/git.png" alt="Git"></a>, which is really useful for keeping track of which branch you're on and whether or not the branch is clean without running commands. Virtual Machines are really important to me. I love having access to any software I need at any time as well as the ability to snapshot and revert entire environments. <a href="https://www.virtualbox.org/"><img src="logos/virtualbox.png" alt="Virtualbox" style="vertical-align: top"></a> is some amazing open source software, especially with <a href="http://www.vagrantup.com/"><img src="logos/vagrant.png" alt="Vagrant"></a> for development. Follow me on <a href="http://twitter.com/benkulbertis"><img src="logos/twitter.png" alt="Twitter"></a> to get to know me personally!
-</div>
+<h3 id="post-title">Changes in mod_authz_unixgroup from Apache 2.2 to 2.4</h3>
+<p class="meta">Mar 23, 2016</p>
+<p>mod_authz_unixgroup is an apache module that can be used to allow members of Unix groups on the server to access restricted content with their Unix user credentials. These groups are defined in a require directive and therefore it can be used with essentially any AuthType. We utilize this extensively at my place of work, as all our users and groups are stored in our Active Directory, which are then mapped to Unix users and groups on all our machines via pam_ldap.</p>
+
+<p>When switching from Apache 2.2 to 2.4, I experienced some issues with compatibility with our current implementation of the module. Under 2.2, the module had to be initialized with &lsquo;AuthzUnixgroup on&rsquo; and the require directive was &lsquo;require group mygroup&rsquo;. The whole configuration looked something like this:</p>
+
+<div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span></span><span style="color: #f8f8f2">AuthType</span> Basic
+<span style="color: #f8f8f2">AuthzUnixgroup</span> <span style="color: #66d9ef">on</span>
+<span style="color: #f8f8f2">Require</span> <span style="color: #66d9ef">group</span> mygroup
+</pre></div>
+
+
+<p>However, this resulted in a 500 error with the following in the logs on Apache 2.4:</p>
+
+<pre><code>Invalid command 'AuthzUnixgroup', perhaps misspelled or defined by a module not included in the server configuration
+</code></pre>
+
+<p>Surprisingly, I couldn&rsquo;t find any sign of this error in Google searches. The module was definitely loaded but this directive was unrecognized with no further explanation. I was about to compile the module from source in an attempt to troubleshoot when I found the answer buried in the <a href="https://raw.githubusercontent.com/phokz/mod-auth-external/master/mod_authz_unixgroup/INSTALL">INSTALL file</a>{:target=&rdquo;_blank&rdquo;}.</p>
+
+<blockquote>
+<p>Previous versions of mod_authz_unixgroup needed a &lsquo;AuthzUnixgroup on&rsquo; to tell Apache that the &ldquo;Require file-group&rdquo; (or &ldquo;Require group&rdquo;) directive was supposed to be handled by mod_authz_unixgroup. Now we have a distinct directive, &ldquo;Require unix-file-group&rdquo; (and &ldquo;Require unix-group&rdquo;) instead, so the &lsquo;AuthzUnixgroup&rsquo; is no longer needed and no longer exists.</p>
+</blockquote>
+
+<p>That certainly explained my error. Now, our configurations look more like this on Apache 2.4:</p>
+
+<p><div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span></span><span style="color: #f8f8f2">AuthType</span> Basic
+<span style="color: #f8f8f2">Require</span> unix-group mygroup
+</pre></div>
+</p>
+
+<p>Behavior is now identical to how it was on 2.2.</p>
+
             </section>
         <script>
             (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
