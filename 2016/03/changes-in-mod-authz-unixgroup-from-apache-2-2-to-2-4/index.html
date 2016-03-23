@@ -69,8 +69,9 @@
 
 <p>However, this resulted in a 500 error with the following in the logs on Apache 2.4:</p>
 
-<pre><code>Invalid command 'AuthzUnixgroup', perhaps misspelled or defined by a module not included in the server configuration
-</code></pre>
+<div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span></span>Invalid command &#39;AuthzUnixgroup&#39;, perhaps misspelled or defined by a module not included in the server configuration
+</pre></div>
+
 
 <p>Surprisingly, I couldn&rsquo;t find any sign of this error in Google searches. The module was definitely loaded but this directive was unrecognized with no further explanation. I was about to compile the module from source in an attempt to troubleshoot when I found the answer buried in the <a href="https://raw.githubusercontent.com/phokz/mod-auth-external/master/mod_authz_unixgroup/INSTALL">INSTALL file</a>{:target=&rdquo;_blank&rdquo;}.</p>
 
