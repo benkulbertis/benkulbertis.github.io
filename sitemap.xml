@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <url>
+    <loc>http://ben.kulbertis.org/</loc>
+    <lastmod>2016-03-23T15:02:23-06:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://ben.kulbertis.org/2016/03/synchronizing-a-mysql-database-with-git-and-git-hooks</loc>
+    <lastmod>2016-03-23T15:02:23-06:00</lastmod>
+  </url>
+  
+</urlset>
