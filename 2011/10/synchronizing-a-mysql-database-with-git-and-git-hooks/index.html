@@ -6,10 +6,10 @@
         <title>Synchronizing A MySQL Database with Git and Git Hooks - Ben Kulbertis</title>
         <meta property="og:title" content="Synchronizing A MySQL Database with Git and Git Hooks - Ben Kulbertis" />
         <meta property="og:site_name" content="Ben Kulbertis" />
-        <meta property="og:url" content="http://ben.kulbertis.org/2016/03/synchronizing-a-mysql-database-with-git-and-git-hooks" />
+        <meta property="og:url" content="http://ben.kulbertis.org/2011/10/synchronizing-a-mysql-database-with-git-and-git-hooks" />
         <meta name="viewport" content="width=device-width">
         <meta name="description" content="Hey! I&#39;m Ben. I&#39;m a young web developer living in Salt Lake City, Utah. I&#39;m currently interesting in writing web applications using Ember.js and Ruby on Rails.">
-        <link rel="canonical" href="http://ben.kulbertis.org/2016/03/synchronizing-a-mysql-database-with-git-and-git-hooks">
+        <link rel="canonical" href="http://ben.kulbertis.org/2011/10/synchronizing-a-mysql-database-with-git-and-git-hooks">
         <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"/>
 
         
@@ -39,8 +39,8 @@
                 <ul class="posts">
                     
                         <li>
-    <a class="post-link" href="http://ben.kulbertis.org/2016/03/synchronizing-a-mysql-database-with-git-and-git-hooks">Synchronizing A MySQL Database with Git and Git Hooks</a>
-    <small>&ndash; Mar 23, 2016</small>
+    <a class="post-link" href="http://ben.kulbertis.org/2011/10/synchronizing-a-mysql-database-with-git-and-git-hooks">Synchronizing A MySQL Database with Git and Git Hooks</a>
+    <small>&ndash; Oct 29, 2011</small>
 </li>
                     
                 </ul>
@@ -54,7 +54,7 @@
         </header>
         <section class="post">
 <h3 id="post-title">Synchronizing A MySQL Database with Git and Git Hooks</h3>
-<p class="meta">Mar 23, 2016</p>
+<p class="meta">Oct 29, 2011</p>
 <p>When I develop web based projects I often use a MySQL database to hold the data for my project. I also use git for source control and since I tend to work on my projects from several different computers I push and pull from a VPS of mine. This system works great for keeping all my source code in check and is easily accessible. However, I have had one issue. I was having to create a testing instance of my MySQL database on every computer that I pulled onto and worked from. This was a waste of time and also resulted in inconsistencies in my testing data which became confusing at times. I decided that I&rsquo;d had enough of this and set out to find a solution.</p>
 
 <p>I found <a title="Backup Your Database in Git" href="http://www.viget.com/extend/backup-your-database-in-git/" target="_blank">an article by David Eisinger entitled &ldquo;Backup your Database in Git&rdquo;</a> in which he suggested using mysqldump and simply adding the dump to the database. While I had hoped for a more elegant solution than simply dumping your database every time, it would certainly work. He also suggested using cron to schedule dumps. David wrote this article describing a way to backup a production site, which cron would work fine for, but for me it would have to be a little more complicated as I wanted an updated database on every commit.</p>

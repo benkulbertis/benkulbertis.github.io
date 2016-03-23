@@ -6,15 +6,15 @@
     <description>Recent content in Posts on Ben Kulbertis</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 23 Mar 2016 15:02:23 -0600</lastBuildDate>
+    <lastBuildDate>Sat, 29 Oct 2011 19:19:00 -0500</lastBuildDate>
     <atom:link href="http://ben.kulbertis.org/post/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Synchronizing A MySQL Database with Git and Git Hooks</title>
-      <link>http://ben.kulbertis.org/2016/03/synchronizing-a-mysql-database-with-git-and-git-hooks</link>
-      <pubDate>Wed, 23 Mar 2016 15:02:23 -0600</pubDate>
+      <link>http://ben.kulbertis.org/2011/10/synchronizing-a-mysql-database-with-git-and-git-hooks</link>
+      <pubDate>Sat, 29 Oct 2011 19:19:00 -0500</pubDate>
       
-      <guid>http://ben.kulbertis.org/2016/03/synchronizing-a-mysql-database-with-git-and-git-hooks</guid>
+      <guid>http://ben.kulbertis.org/2011/10/synchronizing-a-mysql-database-with-git-and-git-hooks</guid>
       <description>&lt;p&gt;When I develop web based projects I often use a MySQL database to hold the data for my project. I also use git for source control and since I tend to work on my projects from several different computers I push and pull from a VPS of mine. This system works great for keeping all my source code in check and is easily accessible. However, I have had one issue. I was having to create a testing instance of my MySQL database on every computer that I pulled onto and worked from. This was a waste of time and also resulted in inconsistencies in my testing data which became confusing at times. I decided that I&amp;rsquo;d had enough of this and set out to find a solution.&lt;/p&gt;
 
 &lt;p&gt;I found &lt;a title=&#34;Backup Your Database in Git&#34; href=&#34;http://www.viget.com/extend/backup-your-database-in-git/&#34; target=&#34;_blank&#34;&gt;an article by David Eisinger entitled &amp;ldquo;Backup your Database in Git&amp;rdquo;&lt;/a&gt; in which he suggested using mysqldump and simply adding the dump to the database. While I had hoped for a more elegant solution than simply dumping your database every time, it would certainly work. He also suggested using cron to schedule dumps. David wrote this article describing a way to backup a production site, which cron would work fine for, but for me it would have to be a little more complicated as I wanted an updated database on every commit.&lt;/p&gt;
