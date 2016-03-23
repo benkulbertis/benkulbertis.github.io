@@ -15,7 +15,7 @@
       <pubDate>Wed, 23 Mar 2016 16:36:34 -0600</pubDate>
       
       <guid>http://ben.kulbertis.org/2016/03/changes-in-mod-authz-unixgroup-from-apache-2-2-to-2-4</guid>
-      <description>&lt;p&gt;mod_authz_unixgroup is an apache module that can be used to allow members of Unix groups on the server to access restricted content with their Unix user credentials. These groups are defined in a require directive and therefore it can be used with essentially any AuthType. We utilize this extensively at my place of work, as all our users and groups are stored in our Active Directory, which are then mapped to Unix users and groups on all our machines via pam_ldap.&lt;/p&gt;
+      <description>&lt;p&gt;mod_authz_unixgroup is an Apache module that can be used to allow members of Unix groups on the server to access restricted content with their Unix user credentials. These groups are defined in a &lt;a href=&#34;https://httpd.apache.org/docs/2.4/mod/mod_authz_core.html#require&#34; target=&#34;_blank&#34;&gt;Require&lt;/a&gt; directive and therefore it can be used with essentially any &lt;a href=&#34;https://httpd.apache.org/docs/current/mod/mod_authn_core.html#authtype&#34; target=&#34;_blank&#34;&gt;AuthType&lt;/a&gt;. We utilize this extensively at my place of work, as all our users and groups are stored in our Active Directory, which are then mapped to Unix users and groups on all our machines via pam_ldap.&lt;/p&gt;
 
 &lt;p&gt;When switching from Apache 2.2 to 2.4, I experienced some issues with compatibility with our current implementation of the module. Under 2.2, the module had to be initialized with &amp;lsquo;AuthzUnixgroup on&amp;rsquo; and the require directive was &amp;lsquo;require group mygroup&amp;rsquo;. The whole configuration looked something like this:&lt;/p&gt;
 
@@ -31,7 +31,7 @@
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;Surprisingly, I couldn&amp;rsquo;t find any sign of this error in Google searches. The module was definitely loaded but this directive was unrecognized with no further explanation. I was about to compile the module from source in an attempt to troubleshoot when I found the answer buried in the &lt;a href=&#34;https://raw.githubusercontent.com/phokz/mod-auth-external/master/mod_authz_unixgroup/INSTALL&#34;&gt;INSTALL file&lt;/a&gt;{:target=&amp;rdquo;_blank&amp;rdquo;}.&lt;/p&gt;
+&lt;p&gt;Surprisingly, I couldn&amp;rsquo;t find any sign of this error in Google searches. The module was definitely loaded but this directive was unrecognized with no further explanation. I was about to compile the module from source in an attempt to troubleshoot when I found the answer buried in the &lt;a href=&#34;https://raw.githubusercontent.com/phokz/mod-auth-external/master/mod_authz_unixgroup/INSTALL&#34; target=&#34;_blank&#34;&gt;INSTALL file&lt;/a&gt;:&lt;/p&gt;
 
 &lt;blockquote&gt;
 &lt;p&gt;Previous versions of mod_authz_unixgroup needed a &amp;lsquo;AuthzUnixgroup on&amp;rsquo; to tell Apache that the &amp;ldquo;Require file-group&amp;rdquo; (or &amp;ldquo;Require group&amp;rdquo;) directive was supposed to be handled by mod_authz_unixgroup. Now we have a distinct directive, &amp;ldquo;Require unix-file-group&amp;rdquo; (and &amp;ldquo;Require unix-group&amp;rdquo;) instead, so the &amp;lsquo;AuthzUnixgroup&amp;rsquo; is no longer needed and no longer exists.&lt;/p&gt;
