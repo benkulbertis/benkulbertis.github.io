@@ -20,7 +20,7 @@
 &lt;p&gt;When switching from Apache 2.2 to 2.4, I experienced some issues with compatibility with our current implementation of the module. Under 2.2, the module had to be initialized with &amp;lsquo;AuthzUnixgroup On&amp;rsquo; and the Require directive was &amp;lsquo;Require group mygroup&amp;rsquo;. The whole configuration looked something like this:&lt;/p&gt;
 
 &lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;AuthType&lt;/span&gt; Basic
-&lt;span style=&#34;color: #f8f8f2&#34;&gt;AuthzUnixgroup&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;on&lt;/span&gt;
+&lt;span style=&#34;color: #f8f8f2&#34;&gt;AuthzUnixgroup&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;On&lt;/span&gt;
 &lt;span style=&#34;color: #f8f8f2&#34;&gt;Require&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;group&lt;/span&gt; mygroup
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -51,7 +51,7 @@
     <item>
       <title>Synchronizing A MySQL Database with Git and Git Hooks</title>
       <link>http://ben.kulbertis.org/2011/10/synchronizing-a-mysql-database-with-git-and-git-hooks</link>
-      <pubDate>Sat, 29 Oct 2011 19:19:00 -0500</pubDate>
+      <pubDate>Sat, 29 Oct 2011 19:19:00 -0400</pubDate>
       
       <guid>http://ben.kulbertis.org/2011/10/synchronizing-a-mysql-database-with-git-and-git-hooks</guid>
       <description>&lt;p&gt;When I develop web based projects I often use a MySQL database to hold the data for my project. I also use git for source control and since I tend to work on my projects from several different computers I push and pull from a VPS of mine. This system works great for keeping all my source code in check and is easily accessible. However, I have had one issue. I was having to create a testing instance of my MySQL database on every computer that I pulled onto and worked from. This was a waste of time and also resulted in inconsistencies in my testing data which became confusing at times. I decided that I&amp;rsquo;d had enough of this and set out to find a solution.&lt;/p&gt;
