@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="generator" content="Hugo 0.16-DEV" />
+        <meta name="generator" content="Hugo 0.18.1" />
 	<meta name="viewport" content="width=device-width">
         <meta name="description" content="Hey! I&#39;m Ben. I&#39;m a young web developer living in Salt Lake City, Utah. I&#39;m currently interesting in writing web applications using Ember.js and Ruby on Rails.">
 
@@ -113,30 +113,30 @@ git add <span style="color: #f92672">[</span>database<span style="color: #f92672
 
 <p>And mark the script executable.</p>
 
-<p><div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span></span>chmod +x /path/to/your/repo/.git/hooks/pre-commit
+<div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span></span>chmod +x /path/to/your/repo/.git/hooks/pre-commit
 </pre></div>
-</p>
+
 
 <p>Now, lets write the post-merge script. We are going to tell the system to restore the MySQL dump to the local database for the latest changes. Edit the post-merge hook with:</p>
 
-<p><div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span></span><span style="color: #f92672">[</span>your editor<span style="color: #f92672">]</span> /path/to/your/repo/.git/hooks/post-merge
+<div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span></span><span style="color: #f92672">[</span>your editor<span style="color: #f92672">]</span> /path/to/your/repo/.git/hooks/post-merge
 </pre></div>
-</p>
+
 
 <p>And write:</p>
 
-<p><div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span></span><span style="color: #75715e">#!/bin/bash</span>
+<div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span></span><span style="color: #75715e">#!/bin/bash</span>
 mysql -u <span style="color: #f92672">[</span>mysql user<span style="color: #f92672">]</span> -p<span style="color: #f92672">[</span>mysql password<span style="color: #f92672">]</span> <span style="color: #f92672">[</span>database<span style="color: #f92672">]</span> &lt; /path/to/your/repo/<span style="color: #f92672">[</span>database<span style="color: #f92672">]</span>.sql
 </pre></div>
-</p>
+
 
 <p><strong>Note that in both in the mysqldump and mysql commands, there is no space between the -p and the password.</strong></p>
 
 <p>And let&rsquo;s mark this one executable too.</p>
 
-<p><div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span></span>chmod +x /path/to/your/repo/.git/hooks/post-merge
+<div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span></span>chmod +x /path/to/your/repo/.git/hooks/post-merge
 </pre></div>
-</p>
+
 
 <p>That is it! Now your MySQL database will be pushed and pulled with the rest of the commit and the pre-commit and post-merge hooks will handle the importing and exporting of the dumps.</p>
 

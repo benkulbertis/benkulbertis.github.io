@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Ben Kulbertis</title>
-    <link>http://ben.kulbertis.org/</link>
+    <link>http://ben.kulbertis.org/index.xml</link>
     <description>Recent content on Ben Kulbertis</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
@@ -39,10 +39,10 @@
 
 &lt;p&gt;That certainly explained my error. Now, our configurations look more like this on Apache 2.4:&lt;/p&gt;
 
-&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;AuthType&lt;/span&gt; Basic
+&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;AuthType&lt;/span&gt; Basic
 &lt;span style=&#34;color: #f8f8f2&#34;&gt;Require&lt;/span&gt; unix-group mygroup
 &lt;/pre&gt;&lt;/div&gt;
-&lt;/p&gt;
+
 
 &lt;p&gt;Behavior is now identical to how it was on 2.2.&lt;/p&gt;
 </description>
@@ -77,30 +77,30 @@ git add &lt;span style=&#34;color: #f92672&#34;&gt;[&lt;/span&gt;database&lt;spa
 
 &lt;p&gt;And mark the script executable.&lt;/p&gt;
 
-&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;chmod +x /path/to/your/repo/.git/hooks/pre-commit
+&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;chmod +x /path/to/your/repo/.git/hooks/pre-commit
 &lt;/pre&gt;&lt;/div&gt;
-&lt;/p&gt;
+
 
 &lt;p&gt;Now, lets write the post-merge script. We are going to tell the system to restore the MySQL dump to the local database for the latest changes. Edit the post-merge hook with:&lt;/p&gt;
 
-&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;[&lt;/span&gt;your editor&lt;span style=&#34;color: #f92672&#34;&gt;]&lt;/span&gt; /path/to/your/repo/.git/hooks/post-merge
+&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;[&lt;/span&gt;your editor&lt;span style=&#34;color: #f92672&#34;&gt;]&lt;/span&gt; /path/to/your/repo/.git/hooks/post-merge
 &lt;/pre&gt;&lt;/div&gt;
-&lt;/p&gt;
+
 
 &lt;p&gt;And write:&lt;/p&gt;
 
-&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #75715e&#34;&gt;#!/bin/bash&lt;/span&gt;
+&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #75715e&#34;&gt;#!/bin/bash&lt;/span&gt;
 mysql -u &lt;span style=&#34;color: #f92672&#34;&gt;[&lt;/span&gt;mysql user&lt;span style=&#34;color: #f92672&#34;&gt;]&lt;/span&gt; -p&lt;span style=&#34;color: #f92672&#34;&gt;[&lt;/span&gt;mysql password&lt;span style=&#34;color: #f92672&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;[&lt;/span&gt;database&lt;span style=&#34;color: #f92672&#34;&gt;]&lt;/span&gt; &amp;lt; /path/to/your/repo/&lt;span style=&#34;color: #f92672&#34;&gt;[&lt;/span&gt;database&lt;span style=&#34;color: #f92672&#34;&gt;]&lt;/span&gt;.sql
 &lt;/pre&gt;&lt;/div&gt;
-&lt;/p&gt;
+
 
 &lt;p&gt;&lt;strong&gt;Note that in both in the mysqldump and mysql commands, there is no space between the -p and the password.&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;And let&amp;rsquo;s mark this one executable too.&lt;/p&gt;
 
-&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;chmod +x /path/to/your/repo/.git/hooks/post-merge
+&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;chmod +x /path/to/your/repo/.git/hooks/post-merge
 &lt;/pre&gt;&lt;/div&gt;
-&lt;/p&gt;
+
 
 &lt;p&gt;That is it! Now your MySQL database will be pushed and pulled with the rest of the commit and the pre-commit and post-merge hooks will handle the importing and exporting of the dumps.&lt;/p&gt;
 </description>
