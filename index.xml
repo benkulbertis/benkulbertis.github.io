@@ -2,108 +2,31 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Ben Kulbertis</title>
-    <link>http://ben.kulbertis.org/index.xml</link>
+    <link>http://ben.kulbertis.org/</link>
     <description>Recent content on Ben Kulbertis</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 23 Mar 2016 16:36:34 -0600</lastBuildDate>
-    <atom:link href="http://ben.kulbertis.org/index.xml" rel="self" type="application/rss+xml" />
+    
+	<atom:link href="http://ben.kulbertis.org/index.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
       <title>Changes in mod_authz_unixgroup from Apache 2.2 to 2.4</title>
-      <link>http://ben.kulbertis.org/2016/03/changes-in-mod-authz-unixgroup-from-apache-2-2-to-2-4</link>
+      <link>http://ben.kulbertis.org/2016/03/changes-in-mod-authz-unixgroup-from-apache-2-2-to-2-4/</link>
       <pubDate>Wed, 23 Mar 2016 16:36:34 -0600</pubDate>
       
-      <guid>http://ben.kulbertis.org/2016/03/changes-in-mod-authz-unixgroup-from-apache-2-2-to-2-4</guid>
-      <description>&lt;p&gt;mod_authz_unixgroup is an Apache module that can be used to allow members of Unix groups on the server to access restricted content with their Unix user credentials. These groups are defined in a &lt;a href=&#34;https://httpd.apache.org/docs/2.4/mod/mod_authz_core.html#require&#34; target=&#34;_blank&#34;&gt;Require&lt;/a&gt; directive and therefore it can be used with essentially any &lt;a href=&#34;https://httpd.apache.org/docs/current/mod/mod_authn_core.html#authtype&#34; target=&#34;_blank&#34;&gt;AuthType&lt;/a&gt;. We utilize this extensively at my place of work, as all our users and groups are stored in our Active Directory, which are then mapped to Unix users and groups on all our machines via pam_ldap.&lt;/p&gt;
-
-&lt;p&gt;When switching from Apache 2.2 to 2.4, I experienced some issues with compatibility with our current implementation of the module. Under 2.2, the module had to be initialized with &amp;lsquo;AuthzUnixgroup On&amp;rsquo; and the Require directive was &amp;lsquo;Require group mygroup&amp;rsquo;. The whole configuration looked something like this:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;AuthType&lt;/span&gt; Basic
-&lt;span style=&#34;color: #f8f8f2&#34;&gt;AuthzUnixgroup&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;On&lt;/span&gt;
-&lt;span style=&#34;color: #f8f8f2&#34;&gt;Require&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;group&lt;/span&gt; mygroup
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;However, this resulted in a 500 error with the following in the logs on Apache 2.4:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;Invalid command &amp;#39;AuthzUnixgroup&amp;#39;, perhaps misspelled or defined by a module not included in the server configuration
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;Surprisingly, I couldn&amp;rsquo;t find any sign of this error in Google searches. The module was definitely loaded but this directive was unrecognized with no further explanation. I was about to compile the module from source in an attempt to troubleshoot when I found the answer buried in the &lt;a href=&#34;https://raw.githubusercontent.com/phokz/mod-auth-external/master/mod_authz_unixgroup/INSTALL&#34; target=&#34;_blank&#34;&gt;INSTALL file&lt;/a&gt;:&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;Previous versions of mod_authz_unixgroup needed a &amp;lsquo;AuthzUnixgroup on&amp;rsquo; to tell Apache that the &amp;ldquo;Require file-group&amp;rdquo; (or &amp;ldquo;Require group&amp;rdquo;) directive was supposed to be handled by mod_authz_unixgroup. Now we have a distinct directive, &amp;ldquo;Require unix-file-group&amp;rdquo; (and &amp;ldquo;Require unix-group&amp;rdquo;) instead, so the &amp;lsquo;AuthzUnixgroup&amp;rsquo; is no longer needed and no longer exists.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;That certainly explained my error. Now, our configurations look more like this on Apache 2.4:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;AuthType&lt;/span&gt; Basic
-&lt;span style=&#34;color: #f8f8f2&#34;&gt;Require&lt;/span&gt; unix-group mygroup
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;Behavior is now identical to how it was on 2.2.&lt;/p&gt;
-</description>
+      <guid>http://ben.kulbertis.org/2016/03/changes-in-mod-authz-unixgroup-from-apache-2-2-to-2-4/</guid>
+      <description>mod_authz_unixgroup is an Apache module that can be used to allow members of Unix groups on the server to access restricted content with their Unix user credentials. These groups are defined in a Require directive and therefore it can be used with essentially any AuthType. We utilize this extensively at my place of work, as all our users and groups are stored in our Active Directory, which are then mapped to Unix users and groups on all our machines via pam_ldap.</description>
     </item>
     
     <item>
       <title>Synchronizing A MySQL Database with Git and Git Hooks</title>
-      <link>http://ben.kulbertis.org/2011/10/synchronizing-a-mysql-database-with-git-and-git-hooks</link>
+      <link>http://ben.kulbertis.org/2011/10/synchronizing-a-mysql-database-with-git-and-git-hooks/</link>
       <pubDate>Sat, 29 Oct 2011 19:19:00 -0400</pubDate>
       
-      <guid>http://ben.kulbertis.org/2011/10/synchronizing-a-mysql-database-with-git-and-git-hooks</guid>
-      <description>&lt;p&gt;When I develop web based projects I often use a MySQL database to hold the data for my project. I also use git for source control and since I tend to work on my projects from several different computers I push and pull from a VPS of mine. This system works great for keeping all my source code in check and is easily accessible. However, I have had one issue. I was having to create a testing instance of my MySQL database on every computer that I pulled onto and worked from. This was a waste of time and also resulted in inconsistencies in my testing data which became confusing at times. I decided that I&amp;rsquo;d had enough of this and set out to find a solution.&lt;/p&gt;
-
-&lt;p&gt;I found &lt;a title=&#34;Backup Your Database in Git&#34; href=&#34;http://www.viget.com/extend/backup-your-database-in-git/&#34; target=&#34;_blank&#34;&gt;an article by David Eisinger entitled &amp;ldquo;Backup your Database in Git&amp;rdquo;&lt;/a&gt; in which he suggested using mysqldump and simply adding the dump to the database. While I had hoped for a more elegant solution than simply dumping your database every time, it would certainly work. He also suggested using cron to schedule dumps. David wrote this article describing a way to backup a production site, which cron would work fine for, but for me it would have to be a little more complicated as I wanted an updated database on every commit.&lt;/p&gt;
-
-&lt;p&gt;To automate the process of dumping and restoring my database dumps I decided that &lt;a title=&#34;Git Hooks&#34; href=&#34;http://book.git-scm.com/5_git_hooks.html&#34; target=&#34;_blank&#34;&gt;git hooks&lt;/a&gt; would be able to do the job. I had recently worked with git hooks as a way to &lt;a title=&#34;Automatically Deploying Website From Remote Git Repository&#34; href=&#34;http://caiustheory.com/automatically-deploying-website-from-remote-git-repository&#34; target=&#34;_blank&#34;&gt;deploy website updates directly from a git database&lt;/a&gt;. Using the pre-commit hook and the post-merge hook, we can create a system  that will automatically dump and add your database to each commit and update your local database from each pull.&lt;/p&gt;
-
-&lt;p&gt;Let&amp;rsquo;s start with pre-commit. The pre-commit hook will run a script directly before a commit is executed. To edit your pre-commit hook:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;[&lt;/span&gt;your editor&lt;span style=&#34;color: #f92672&#34;&gt;]&lt;/span&gt; /path/to/your/repo/.git/hooks/pre-commit
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;Now, lets write the pre-commit script. We are going to tell the system to dump our MySQL database to our git repository and add it to be committed.&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #75715e&#34;&gt;#!/bin/bash&lt;/span&gt;
-mysqldump -u &lt;span style=&#34;color: #f92672&#34;&gt;[&lt;/span&gt;mysql user&lt;span style=&#34;color: #f92672&#34;&gt;]&lt;/span&gt; -p&lt;span style=&#34;color: #f92672&#34;&gt;[&lt;/span&gt;mysql password&lt;span style=&#34;color: #f92672&#34;&gt;]&lt;/span&gt; --skip-extended-insert &lt;span style=&#34;color: #f92672&#34;&gt;[&lt;/span&gt;database&lt;span style=&#34;color: #f92672&#34;&gt;]&lt;/span&gt; &amp;gt; /path/to/your/repo/&lt;span style=&#34;color: #f92672&#34;&gt;[&lt;/span&gt;database&lt;span style=&#34;color: #f92672&#34;&gt;]&lt;/span&gt;.sql
-&lt;span style=&#34;color: #f8f8f2&#34;&gt;cd&lt;/span&gt; /path/to/your/repo
-git add &lt;span style=&#34;color: #f92672&#34;&gt;[&lt;/span&gt;database&lt;span style=&#34;color: #f92672&#34;&gt;]&lt;/span&gt;.sql
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;And mark the script executable.&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;chmod +x /path/to/your/repo/.git/hooks/pre-commit
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;Now, lets write the post-merge script. We are going to tell the system to restore the MySQL dump to the local database for the latest changes. Edit the post-merge hook with:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;[&lt;/span&gt;your editor&lt;span style=&#34;color: #f92672&#34;&gt;]&lt;/span&gt; /path/to/your/repo/.git/hooks/post-merge
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;And write:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #75715e&#34;&gt;#!/bin/bash&lt;/span&gt;
-mysql -u &lt;span style=&#34;color: #f92672&#34;&gt;[&lt;/span&gt;mysql user&lt;span style=&#34;color: #f92672&#34;&gt;]&lt;/span&gt; -p&lt;span style=&#34;color: #f92672&#34;&gt;[&lt;/span&gt;mysql password&lt;span style=&#34;color: #f92672&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;[&lt;/span&gt;database&lt;span style=&#34;color: #f92672&#34;&gt;]&lt;/span&gt; &amp;lt; /path/to/your/repo/&lt;span style=&#34;color: #f92672&#34;&gt;[&lt;/span&gt;database&lt;span style=&#34;color: #f92672&#34;&gt;]&lt;/span&gt;.sql
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;&lt;strong&gt;Note that in both in the mysqldump and mysql commands, there is no space between the -p and the password.&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;And let&amp;rsquo;s mark this one executable too.&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;chmod +x /path/to/your/repo/.git/hooks/post-merge
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;That is it! Now your MySQL database will be pushed and pulled with the rest of the commit and the pre-commit and post-merge hooks will handle the importing and exporting of the dumps.&lt;/p&gt;
-</description>
+      <guid>http://ben.kulbertis.org/2011/10/synchronizing-a-mysql-database-with-git-and-git-hooks/</guid>
+      <description>When I develop web based projects I often use a MySQL database to hold the data for my project. I also use git for source control and since I tend to work on my projects from several different computers I push and pull from a VPS of mine. This system works great for keeping all my source code in check and is easily accessible. However, I have had one issue. I was having to create a testing instance of my MySQL database on every computer that I pulled onto and worked from.</description>
     </item>
     
   </channel>

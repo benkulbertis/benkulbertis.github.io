@@ -3,13 +3,13 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="generator" content="Hugo 0.18.1" />
+        <meta name="generator" content="Hugo 0.40.1" />
 	<meta name="viewport" content="width=device-width">
-        <meta name="description" content="Hey! I&#39;m Ben. I&#39;m a deployment automation engineer living in Salt Lake City, Utah.">
+        <meta name="description" content="Hey! I&#39;m Ben. I&#39;m a dev/ops engineer living in Salt Lake City, Utah.">
 
 	<title>Synchronizing A MySQL Database with Git and Git Hooks - Ben Kulbertis</title>
 
-        <link rel="canonical" href="http://ben.kulbertis.org/2011/10/synchronizing-a-mysql-database-with-git-and-git-hooks">
+        <link rel="canonical" href="http://ben.kulbertis.org/2011/10/synchronizing-a-mysql-database-with-git-and-git-hooks/">
         <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"/>
 
 	
@@ -36,7 +36,7 @@
         <header>
             <div id="headers">
                 <h1><a href="http://ben.kulbertis.org">Ben Kulbertis</a></h1>
-                <h2>Deployment Automation Engineer and Systems Administrator</h2>
+                <h2>Development and Operations Engineer</h2>
                 <h2>Salt Lake City, Utah, USA</h2>
             </div>
             <nav>
@@ -44,12 +44,12 @@
                 <ul class="posts">
                     
                         <li>
-    <a class="post-link" href="http://ben.kulbertis.org/2016/03/changes-in-mod-authz-unixgroup-from-apache-2-2-to-2-4">Changes in mod_authz_unixgroup from Apache 2.2 to 2.4</a>
+    <a class="post-link" href="http://ben.kulbertis.org/2016/03/changes-in-mod-authz-unixgroup-from-apache-2-2-to-2-4/">Changes in mod_authz_unixgroup from Apache 2.2 to 2.4</a>
     <small>&ndash; Mar 23, 2016</small>
 </li>
                     
                         <li>
-    <a class="post-link" href="http://ben.kulbertis.org/2011/10/synchronizing-a-mysql-database-with-git-and-git-hooks">Synchronizing A MySQL Database with Git and Git Hooks</a>
+    <a class="post-link" href="http://ben.kulbertis.org/2011/10/synchronizing-a-mysql-database-with-git-and-git-hooks/">Synchronizing A MySQL Database with Git and Git Hooks</a>
     <small>&ndash; Oct 29, 2011</small>
 </li>
                     
@@ -88,45 +88,33 @@
 
 <p>Let&rsquo;s start with pre-commit. The pre-commit hook will run a script directly before a commit is executed. To edit your pre-commit hook:</p>
 
-<div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span></span><span style="color: #f92672">[</span>your editor<span style="color: #f92672">]</span> /path/to/your/repo/.git/hooks/pre-commit
-</pre></div>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>your editor<span style="color:#f92672">]</span> /path/to/your/repo/.git/hooks/pre-commit</code></pre></div>
 
 <p>Now, lets write the pre-commit script. We are going to tell the system to dump our MySQL database to our git repository and add it to be committed.</p>
 
-<div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span></span><span style="color: #75715e">#!/bin/bash</span>
-mysqldump -u <span style="color: #f92672">[</span>mysql user<span style="color: #f92672">]</span> -p<span style="color: #f92672">[</span>mysql password<span style="color: #f92672">]</span> --skip-extended-insert <span style="color: #f92672">[</span>database<span style="color: #f92672">]</span> &gt; /path/to/your/repo/<span style="color: #f92672">[</span>database<span style="color: #f92672">]</span>.sql
-<span style="color: #f8f8f2">cd</span> /path/to/your/repo
-git add <span style="color: #f92672">[</span>database<span style="color: #f92672">]</span>.sql
-</pre></div>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">#!/bin/bash
+</span><span style="color:#75715e"></span>mysqldump -u <span style="color:#f92672">[</span>mysql user<span style="color:#f92672">]</span> -p<span style="color:#f92672">[</span>mysql password<span style="color:#f92672">]</span> --skip-extended-insert <span style="color:#f92672">[</span>database<span style="color:#f92672">]</span> &gt; /path/to/your/repo/<span style="color:#f92672">[</span>database<span style="color:#f92672">]</span>.sql
+cd /path/to/your/repo
+git add <span style="color:#f92672">[</span>database<span style="color:#f92672">]</span>.sql</code></pre></div>
 
 <p>And mark the script executable.</p>
 
-<div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span></span>chmod +x /path/to/your/repo/.git/hooks/pre-commit
-</pre></div>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">chmod +x /path/to/your/repo/.git/hooks/pre-commit</code></pre></div>
 
 <p>Now, lets write the post-merge script. We are going to tell the system to restore the MySQL dump to the local database for the latest changes. Edit the post-merge hook with:</p>
 
-<div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span></span><span style="color: #f92672">[</span>your editor<span style="color: #f92672">]</span> /path/to/your/repo/.git/hooks/post-merge
-</pre></div>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>your editor<span style="color:#f92672">]</span> /path/to/your/repo/.git/hooks/post-merge</code></pre></div>
 
 <p>And write:</p>
 
-<div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span></span><span style="color: #75715e">#!/bin/bash</span>
-mysql -u <span style="color: #f92672">[</span>mysql user<span style="color: #f92672">]</span> -p<span style="color: #f92672">[</span>mysql password<span style="color: #f92672">]</span> <span style="color: #f92672">[</span>database<span style="color: #f92672">]</span> &lt; /path/to/your/repo/<span style="color: #f92672">[</span>database<span style="color: #f92672">]</span>.sql
-</pre></div>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">#!/bin/bash
+</span><span style="color:#75715e"></span>mysql -u <span style="color:#f92672">[</span>mysql user<span style="color:#f92672">]</span> -p<span style="color:#f92672">[</span>mysql password<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>database<span style="color:#f92672">]</span> &lt; /path/to/your/repo/<span style="color:#f92672">[</span>database<span style="color:#f92672">]</span>.sql</code></pre></div>
 
 <p><strong>Note that in both in the mysqldump and mysql commands, there is no space between the -p and the password.</strong></p>
 
 <p>And let&rsquo;s mark this one executable too.</p>
 
-<div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span></span>chmod +x /path/to/your/repo/.git/hooks/post-merge
-</pre></div>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">chmod +x /path/to/your/repo/.git/hooks/post-merge</code></pre></div>
 
 <p>That is it! Now your MySQL database will be pushed and pulled with the rest of the commit and the pre-commit and post-merge hooks will handle the importing and exporting of the dumps.</p>
 

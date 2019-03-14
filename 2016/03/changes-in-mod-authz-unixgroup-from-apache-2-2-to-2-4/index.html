@@ -3,13 +3,13 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="generator" content="Hugo 0.18.1" />
+        <meta name="generator" content="Hugo 0.40.1" />
 	<meta name="viewport" content="width=device-width">
-        <meta name="description" content="Hey! I&#39;m Ben. I&#39;m a deployment automation engineer living in Salt Lake City, Utah.">
+        <meta name="description" content="Hey! I&#39;m Ben. I&#39;m a dev/ops engineer living in Salt Lake City, Utah.">
 
 	<title>Changes in mod_authz_unixgroup from Apache 2.2 to 2.4 - Ben Kulbertis</title>
 
-        <link rel="canonical" href="http://ben.kulbertis.org/2016/03/changes-in-mod-authz-unixgroup-from-apache-2-2-to-2-4">
+        <link rel="canonical" href="http://ben.kulbertis.org/2016/03/changes-in-mod-authz-unixgroup-from-apache-2-2-to-2-4/">
         <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"/>
 
 	
@@ -36,7 +36,7 @@
         <header>
             <div id="headers">
                 <h1><a href="http://ben.kulbertis.org">Ben Kulbertis</a></h1>
-                <h2>Deployment Automation Engineer and Systems Administrator</h2>
+                <h2>Development and Operations Engineer</h2>
                 <h2>Salt Lake City, Utah, USA</h2>
             </div>
             <nav>
@@ -44,12 +44,12 @@
                 <ul class="posts">
                     
                         <li>
-    <a class="post-link" href="http://ben.kulbertis.org/2016/03/changes-in-mod-authz-unixgroup-from-apache-2-2-to-2-4">Changes in mod_authz_unixgroup from Apache 2.2 to 2.4</a>
+    <a class="post-link" href="http://ben.kulbertis.org/2016/03/changes-in-mod-authz-unixgroup-from-apache-2-2-to-2-4/">Changes in mod_authz_unixgroup from Apache 2.2 to 2.4</a>
     <small>&ndash; Mar 23, 2016</small>
 </li>
                     
                         <li>
-    <a class="post-link" href="http://ben.kulbertis.org/2011/10/synchronizing-a-mysql-database-with-git-and-git-hooks">Synchronizing A MySQL Database with Git and Git Hooks</a>
+    <a class="post-link" href="http://ben.kulbertis.org/2011/10/synchronizing-a-mysql-database-with-git-and-git-hooks/">Synchronizing A MySQL Database with Git and Git Hooks</a>
     <small>&ndash; Oct 29, 2011</small>
 </li>
                     
@@ -84,17 +84,13 @@
 
 <p>When switching from Apache 2.2 to 2.4, I experienced some issues with compatibility with our current implementation of the module. Under 2.2, the module had to be initialized with &lsquo;AuthzUnixgroup On&rsquo; and the Require directive was &lsquo;Require group mygroup&rsquo;. The whole configuration looked something like this:</p>
 
-<div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span></span><span style="color: #f8f8f2">AuthType</span> Basic
-<span style="color: #f8f8f2">AuthzUnixgroup</span> <span style="color: #66d9ef">On</span>
-<span style="color: #f8f8f2">Require</span> <span style="color: #66d9ef">group</span> mygroup
-</pre></div>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-apache" data-lang="apache">AuthType Basic
+AuthzUnixgroup <span style="color:#66d9ef">On</span>
+Require <span style="color:#66d9ef">group</span> mygroup</code></pre></div>
 
 <p>However, this resulted in a 500 error with the following in the logs on Apache 2.4:</p>
 
-<div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span></span>Invalid command &#39;AuthzUnixgroup&#39;, perhaps misspelled or defined by a module not included in the server configuration
-</pre></div>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">Invalid command &#39;AuthzUnixgroup&#39;, perhaps misspelled or defined by a module not included in the server configuration</code></pre></div>
 
 <p>Surprisingly, I couldn&rsquo;t find any sign of this error in Google searches. The module was definitely loaded but this directive was unrecognized with no further explanation. I was about to compile the module from source in an attempt to troubleshoot when I found the answer buried in the <a href="https://raw.githubusercontent.com/phokz/mod-auth-external/master/mod_authz_unixgroup/INSTALL" target="_blank">INSTALL file</a>:</p>
 
@@ -104,10 +100,8 @@
 
 <p>That certainly explained my error. Now, our configurations look more like this on Apache 2.4:</p>
 
-<div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span></span><span style="color: #f8f8f2">AuthType</span> Basic
-<span style="color: #f8f8f2">Require</span> unix-group mygroup
-</pre></div>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-apache" data-lang="apache">AuthType Basic
+Require unix-group mygroup</code></pre></div>
 
 <p>Behavior is now identical to how it was on 2.2.</p>
 
