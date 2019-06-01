@@ -3,8 +3,20 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>http://ben.kulbertis.org/</loc>
+    <lastmod>2016-03-23T16:36:34-06:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>http://ben.kulbertis.org/2016/03/changes-in-mod-authz-unixgroup-from-apache-2-2-to-2-4/</loc>
     <lastmod>2016-03-23T16:36:34-06:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://ben.kulbertis.org/post/</loc>
+    <lastmod>2016-03-23T16:36:34-06:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
@@ -13,19 +25,7 @@
   </url>
   
   <url>
-    <loc>http://ben.kulbertis.org/</loc>
-    <lastmod>2016-03-23T16:36:34-06:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>http://ben.kulbertis.org/categories/</loc>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>http://ben.kulbertis.org/post/</loc>
-    <lastmod>2016-03-23T16:36:34-06:00</lastmod>
     <priority>0</priority>
   </url>
   
