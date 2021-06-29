@@ -1,37 +1,21 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  
   <url>
     <loc>http://ben.kulbertis.org/</loc>
     <lastmod>2016-03-23T16:36:34-06:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>http://ben.kulbertis.org/2016/03/changes-in-mod-authz-unixgroup-from-apache-2-2-to-2-4/</loc>
     <lastmod>2016-03-23T16:36:34-06:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>http://ben.kulbertis.org/post/</loc>
     <lastmod>2016-03-23T16:36:34-06:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>http://ben.kulbertis.org/2011/10/synchronizing-a-mysql-database-with-git-and-git-hooks/</loc>
     <lastmod>2011-10-29T19:19:00-04:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>http://ben.kulbertis.org/categories/</loc>
-    <priority>0</priority>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>http://ben.kulbertis.org/tags/</loc>
-    <priority>0</priority>
   </url>
-  
 </urlset>
